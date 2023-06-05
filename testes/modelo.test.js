@@ -23,3 +23,22 @@ test('Testando cadastro de três perguntas', () => {
   expect(perguntas[2].num_respostas).toBe(0);
   expect(perguntas[1].id_pergunta).toBe(perguntas[2].id_pergunta-1);
 });
+
+test('Testando recuperação de pergunta', () => {
+  modelo.cadastrar_pergunta('O que é um pontinho prata na grama?');
+  expect(modelo.get_pergunta(modelo.listar_perguntas()[0].id_pergunta).texto).toBe('O que é um pontinho prata na grama?');
+});
+
+
+test('Testando cadastro de três respostas e duas perguntas', () => {
+  modelo.cadastrar_pergunta('Opinião?');
+  modelo.cadastrar_pergunta('O que é um pontinho preto no castelo?');
+  modelo.cadastrar_resposta(0, 'Gostei');
+  modelo.cadastrar_resposta(1, 'Não sei');
+  modelo.cadastrar_resposta(1, 'A pimenta do reino!');
+  expect(modelo.get_num_respostas(0)).toBe(1);
+  expect(modelo.get_num_respostas(1)).toBe(2);
+  expect(modelo.get_respostas(0)[0].texto).toBe('Gostei');
+  expect(modelo.get_respostas(1)[0].texto).toBe('Não sei');
+  expect(modelo.get_respostas(1)[1].texto).toBe('A pimenta do reino!');
+});
